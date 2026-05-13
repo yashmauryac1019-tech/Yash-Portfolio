@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +17,7 @@ body{background:var(--black);color:var(--white);font-family:'DM Mono',monospace;
 /* CURSOR */
 #cur{width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
 #cur-r{width:32px;height:32px;border:1px solid rgba(201,168,76,.5);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);}
+@media(max-width:900px){#cur,#cur-r{display:none;}body{cursor:auto;}}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:28px 60px;background:linear-gradient(to bottom,rgba(7,7,10,.9) 0%,transparent 100%);}
@@ -35,6 +35,291 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-content{text-align:center;pointer-events:auto;}
 .hero-tag{font-size:9px;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:14px;opacity:0;animation:fadeUp .8s .2s ease forwards;}
 .hero-tag::before,.hero-tag::after{content:'';width:30px;height:1px;background:var(--gold);}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(60px,12vw,160px);font-weight:800;line-height:.9;letter-spacing:-3px;margin-bottom:10px;opacity:0;animation:fadeUp .8s .3s ease forwards;}
+.hero-name .gold{color:var(--gold);display:block;}
+.hero-role{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.5vw,32px);color:var(--muted);letter-spacing:3px;margin-bottom:40px;opacity:0;animation:fadeUp .8s .4s ease forwards;}
+.hero-btns{display:flex;gap:14px;justify-content:center;opacity:0;animation:fadeUp .8s .5s ease forwards;}
+.btn-gold{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:14px 32px;cursor:none;transition:background .3s;}
+.btn-gold:hover{background:var(--gold2);}
+.btn-outline{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid rgba(201,168,76,.4);padding:14px 32px;cursor:none;transition:border-color .3s;}
+.btn-outline:hover{border-color:var(--gold);}
+
+.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp .8s .9s ease forwards;}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scroll-drop 2s ease infinite;}
+@keyframes scroll-drop{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+/* MARQUEE */
+.marquee-wrap{position:relative;z-index:2;border-top:1px solid rgba(201,168,76,.15);border-bottom:1px solid rgba(201,168,76,.15);padding:13px 0;overflow:hidden;background:rgba(7,7,10,.95);}
+.marquee-track{display:flex;gap:60px;animation:marquee 18s linear infinite;white-space:nowrap;}
+.marquee-item{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(201,168,76,.5);display:flex;align-items:center;gap:16px;flex-shrink:0;}
+.mdot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+.section{position:relative;z-index:2;background:rgba(7,7,10,.96);padding:100px 60px;}
+.section.alt{background:rgba(13,13,18,.97);}
+
+.sec-label{font-size:9px;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.sec-label::before{content:'';width:28px;height:1px;background:var(--gold);}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(34px,5vw,64px);font-weight:800;line-height:1;letter-spacing:-1px;margin-bottom:60px;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-text p{font-size:12px;line-height:2.2;color:var(--muted);margin-bottom:18px;}
+.about-text strong{color:var(--gold);font-weight:500;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:50px;}
+.stat-box{background:var(--deep);border:1px solid rgba(201,168,76,.1);padding:30px 24px;text-align:center;transition:border-color .3s,transform .3s;}
+.stat-box:hover{border-color:rgba(201,168,76,.4);transform:translateY(-4px);}
+.stat-num{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--gold);}
+.stat-lbl{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+
+/* GLOBE CANVAS */
+#globe-wrap{width:100%;height:380px;position:relative;}
+#globe-canvas{width:100%;height:100%;}
+.globe-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.skill-card{background:var(--black);border:1px solid rgba(201,168,76,.08);padding:36px 28px;transition:border-color .4s,transform .3s;position:relative;overflow:hidden;}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s;}
+.skill-card:hover::before{transform:scaleX(1);}
+.skill-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px);}
+.skill-icon{font-size:28px;margin-bottom:16px;}
+.skill-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;}
+.skill-desc{font-size:10px;line-height:1.9;color:var(--muted);}
+.skill-bar{height:2px;background:rgba(201,168,76,.1);border-radius:2px;margin-top:18px;overflow:hidden;}
+.skill-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0;transition:width 1.5s ease;}
+
+/* 3D PROJECTS SECTION */
+.projects-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:50px;}
+#cards-canvas-wrap{width:100%;height:500px;position:relative;cursor:none;}
+#cards-canvas{width:100%;height:100%;display:block;}
+.cards-hint{text-align:center;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-top:16px;}
+
+/* CONTACT */
+.contact-section{text-align:center;padding:120px 60px;position:relative;overflow:hidden;}
+.contact-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.08) 0%,transparent 65%);}
+.contact-title{font-family:'Syne',sans-serif;font-size:clamp(40px,7vw,90px);font-weight:800;line-height:.95;letter-spacing:-2px;margin-bottom:20px;position:relative;z-index:1;}
+.contact-title span{color:var(--gold);}
+.contact-sub{font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:44px;position:relative;z-index:1;}
+.contact-email{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.5vw,28px);color:var(--gold);text-decoration:none;letter-spacing:2px;border-bottom:1px solid rgba(201,168,76,.3);padding-bottom:4px;position:relative;z-index:1;transition:border-color .3s;}
+.contact-email:hover{border-color:var(--gold);}
+
+footer{padding:36px 60px;border-top:1px solid rgba(201,168,76,.1);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;background:var(--black);}
+.footer-logo{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;letter-spacing:3px;}
+.footer-logo span{color:var(--gold);}
+.footer-copy{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,242,235,.25);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* MOBILE STATIC PROJECT CARDS */
+.mobile-projects{display:none;flex-direction:column;gap:16px;}
+.m-card{background:var(--deep);border:1px solid rgba(201,168,76,.15);padding:28px 22px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;}
+.m-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.m-card:active{border-color:rgba(201,168,76,.5);transform:translateY(-2px);}
+.m-card-icon{font-size:32px;margin-bottom:14px;}
+.m-card-score{display:inline-block;font-size:10px;letter-spacing:2px;color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:4px 12px;margin-bottom:14px;}
+.m-card-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px;}
+.m-card-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.m-card-tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.m-card-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,.7);border:1px solid rgba(201,168,76,.2);padding:4px 10px;}
+
+@media(max-width:900px){
+  nav{padding:20px 24px;}.nav-links{display:none;}
+  .section{padding:70px 24px;}
+  .about-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .skills-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:14px;padding:28px 24px;text-align:center;}
+  .contact-section{padding:80px 24px;}
+  #cards-canvas-wrap{display:none;}
+  .cards-hint{display:none;}
+  .mobile-projects{display:flex;}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<canvas id="hero-canvas"></canvas>
+
+<nav>
+  <div class="nav-logo">Yash<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Mumbai, India · Available for Projects</div>
+    <h1 class="hero-name">YASH<span class="gold">BUILDS.</span></h1>
+    <p class="hero-role">Freelance Web Developer</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View My Work</button>
+      <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get In Touch</button>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="mdot"></span>HTML · CSS · JS</div>
+    <div class="marquee-item"><span class="mdot"></span>Firebase & Firestore</div>
+    <div class="marquee-item"><span class="mdot"></span>Netlify Deploy</div>
+    <div class="marquee-item"><span class="mdot"></span>3D Web Experiences</div>
+    <div class="marquee-item"><span class="mdot"></span>Client-First Design</div>
+    <div class="marquee-item"><span class="mdot"></span>Mumbai Based</div>
+    <div class="marquee-item"><span class="mdot"></span>HTML · CSS · JS</div>
+    <div class="marquee-item"><span class="mdot"></span>Firebase & Firestore</div>
+    <div class="marquee-item"><span class="mdot"></span>Netlify Deploy</div>
+    <div class="marquee-item"><span class="mdot"></span>3D Web Experiences</div>
+    <div class="marquee-item"><span class="mdot"></span>Client-First Design</div>
+    <div class="marquee-item"><span class="mdot"></span>Mumbai Based</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="sec-label">About Me</div>
+  <div class="sec-title reveal">The Developer<br>Behind the Code.</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a <strong>Mumbai-based freelance web developer</strong> building websites that actually work for small businesses and local clients. Clean code, real results — no fluff.</p>
+      <p>My work spans from <strong>legal documentation firms</strong> to <strong>dental clinics</strong> — each project built from scratch with real client data, custom features, and a sales-first mindset.</p>
+      <p>I work with <strong>Firebase, Firestore, Netlify</strong> and modern web tech to deliver dynamic, database-driven sites that look great and perform even better.</p>
+    </div>
+    <div class="reveal">
+      <div id="globe-wrap">
+        <canvas id="globe-canvas"></canvas>
+        <div class="globe-label">● Mumbai, India — Available Worldwide</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-row reveal">
+    <div class="stat-box"><div class="stat-num">5+</div><div class="stat-lbl">Projects</div></div>
+    <div class="stat-box"><div class="stat-num">2</div><div class="stat-lbl">Cities</div></div>
+    <div class="stat-box"><div class="stat-num">3+</div><div class="stat-lbl">Years Exp</div></div>
+    <div class="stat-box"><div class="stat-num">100%</div><div class="stat-lbl">Committed</div></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section alt" id="skills">
+  <div class="sec-label">Tech Stack</div>
+  <div class="sec-title reveal">What I Work With.</div>
+  <div class="skills-grid">
+    <div class="skill-card reveal"><div class="skill-icon">🌐</div><div class="skill-name">HTML & CSS</div><div class="skill-desc">Semantic markup, responsive layouts, Flexbox & Grid. Pixel-perfect on every screen.</div><div class="skill-bar"><div class="skill-bar-fill" data-w="95"></div></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">⚡</div><div class="skill-name">JavaScript</div><div class="skill-desc">DOM manipulation, async/await, Firebase SDK, dynamic UI, real-time features.</div><div class="skill-bar"><div class="skill-bar-fill" data-w="85"></div></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">🔥</div><div class="skill-name">Firebase</div><div class="skill-desc">Firestore, security rules, authentication, real-time DB, serverless functions.</div><div class="skill-bar"><div class="skill-bar-fill" data-w="80"></div></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">🚀</div><div class="skill-name">Netlify</div><div class="skill-desc">CI/CD, instant deploys, serverless functions, custom domains & HTTPS.</div><div class="skill-bar"><div class="skill-bar-fill" data-w="90"></div></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">📐</div><div class="skill-name">UI/UX Design</div><div class="skill-desc">Client-centric design, color theory, typography, conversion-focused layouts.</div><div class="skill-bar"><div class="skill-bar-fill" data-w="78"></div></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">💼</div><div class="skill-name">Sales & Pitching</div><div class="skill-desc">End-to-end client acquisition — demos, pricing, objection handling & closing.</div><div class="skill-bar"><div class="skill-bar-fill" data-w="88"></div></div></div>
+  </div>
+</section>
+
+<!-- 3D PROJECTS -->
+<section class="section" id="projects">
+  <div class="projects-intro reveal">
+    <div>
+      <div class="sec-label">Selected Work</div>
+      <div class="sec-title" style="margin-bottom:0;">My Projects.</div>
+    </div>
+    <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);">Drag to rotate ↔</span>
+  </div>
+  <div id="cards-canvas-wrap">
+    <canvas id="cards-canvas"></canvas>
+  </div>
+  <div class="cards-hint">← Drag or hover to explore projects →</div>
+
+  <!-- MOBILE STATIC CARDS -->
+  <div class="mobile-projects">
+    <div class="m-card reveal">
+      <div class="m-card-icon">⚖️</div>
+      <div class="m-card-score">★ 7.9</div>
+      <div class="m-card-title">Pradeep Associates</div>
+      <div class="m-card-sub">Legal Services · Dahisar</div>
+      <div class="m-card-tags">
+        <span class="m-card-tag">Firebase</span>
+        <span class="m-card-tag">Netlify</span>
+        <span class="m-card-tag">JS</span>
+      </div>
+    </div>
+    <div class="m-card reveal">
+      <div class="m-card-icon">🦷</div>
+      <div class="m-card-score">★ 7.9</div>
+      <div class="m-card-title">Dr. Kamath's Dental</div>
+      <div class="m-card-sub">Healthcare · Borivali</div>
+      <div class="m-card-tags">
+        <span class="m-card-tag">Firebase</span>
+        <span class="m-card-tag">Booking System</span>
+        <span class="m-card-tag">JS</span>
+      </div>
+    </div>
+    <div class="m-card reveal">
+      <div class="m-card-icon">🏘️</div>
+      <div class="m-card-score">🚧 WIP</div>
+      <div class="m-card-title">Digital Panchayat</div>
+      <div class="m-card-sub">Society App · Coming Soon</div>
+      <div class="m-card-tags">
+        <span class="m-card-tag">Firebase</span>
+        <span class="m-card-tag">Firestore</span>
+        <span class="m-card-tag">JS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="sec-label" style="justify-content:center;">Let's Work Together</div>
+  <h2 class="contact-title reveal">Got a Project<br>in Mind? <span>Let's Talk.</span></h2>
+  <p class="contact-sub reveal">Based in Mumbai · Available for freelance projects across India</p>
+  <a href="mailto:yashmauryadev26@gmail.com" class="contact-email reveal">yashmauryadev26@gmail.com</a>
+  <br><br><br>
+  <div style="display:flex;gap:14px;justify-content:center;" class="reveal">
+    <button class="btn-gold">Start a Project</button>
+    <button class="btn-outline">Download CV</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Yash<span>.</span></div>
+  <div class="footer-copy">© 2026 · Built with precision · Mumbai, India</div>
+</footer>
+
+<!-- THREE.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ═══════════════════════════════
+// 1. CUSTOM CURSOR
+// ═══════════════════════════════
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function anim(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(anim);})();
+document.querySelectorAll('button,a,.skill-card,.stat-box').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';curR.style.width='54px';curR.style.height='54px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';curR.style.width='32px';curR.style.height='32px';});
+});
+
+// ═══════════════════════════════
+// 2. HERO — PART.hero-tag::before,.hero-tag::after{content:'';width:30px;height:1px;background:var(--gold);}
 .hero-name{font-family:'Syne',sans-serif;font-size:clamp(60px,12vw,160px);font-weight:800;line-height:.9;letter-spacing:-3px;margin-bottom:10px;opacity:0;animation:fadeUp .8s .3s ease forwards;}
 .hero-name .gold{color:var(--gold);display:block;}
 .hero-role{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.5vw,32px);color:var(--muted);letter-spacing:3px;margin-bottom:40px;opacity:0;animation:fadeUp .8s .4s ease forwards;}
